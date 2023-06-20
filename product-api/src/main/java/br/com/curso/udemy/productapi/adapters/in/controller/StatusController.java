@@ -1,0 +1,7 @@
+package br.com.curso.udemy.productapi.adapters.in.controller;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class StatusController {
+}

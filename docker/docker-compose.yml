@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  auth-db:
+    image: postgres:latest
+    container_name: auth-db
+    restart: always
+    environment:
+      POSTGRES_DB: ${AUTH_DB_NAME:-auth_db}
+      POSTGRES_USER: ${AUTH_DB_USER:-auth_user}
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD:-auth_password}
+    ports:
+      - 5432:5432
+    volumes:
+      - auth-data:/var/lib/postgresql/data
+
+  product-db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: ${PRODUCT_DB_NAME:-product_db}
+      POSTGRES_USER: ${PRODUCT_DB_USER:-product_user}
+      POSTGRES_PASSWORD: ${PRODUCT_DB_PASSWORD:-product_password}
+    ports:
+      - 5433:5432
+    volumes:
+      - product-data:/var/lib/postgresql/data
+
+  sales-db:
+    image: tutum/mongodb
+    container_name: sales-db
+    restart: always
+    environment:
+      MONGODB_USER: ${SALES_DB_USER:-sales_user}
+      MONGODB_DATABASE: ${SALES_DB_DATABASE:-sales_database}
+      MONGODB_PASS: ${SALES_DB_PASS:-sale_pass}
+    ports:
+      - 27017:27017
+      - 28017:27017
+  
+  sales-rabbit:
+    image: rabbitmq:3-management
+    container_name: sales-rabbit
+    ports:
+      - 5672:5672
+      - 25676:25676
+      - 15672:15672
+
+volumes:
+  auth-data:
+  product-data:
+

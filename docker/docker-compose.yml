@@ -37,6 +37,33 @@ services:
     ports:
       - 27017:27017
       - 28017:27017
+
+  auth-api:
+    build: ./auth-api
+    container_name: auth-api
+    restart: always
+    environment:
+      PORT: ${PORT:-8080}
+    ports:
+      - 8080:8080
+
+  product-api:
+    build: ./product-api
+    container_name: product-api
+    restart: always
+    environment:
+      PORT: ${PORT:-8081}
+    ports:
+      - 8081:8081
+
+  sales-api:
+    build: ./sales-api
+    container_name: sales-api
+    restart: always
+    environment:
+      PORT: ${PORT:-8082}
+    ports:
+      - 8081:8082
   
   sales-rabbit:
     image: rabbitmq:3-management

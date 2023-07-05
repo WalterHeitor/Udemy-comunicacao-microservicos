@@ -10,18 +10,23 @@ class UserService {
     async findByEmail(req) {
         try {
             const { email } = req.params;
+            const { authUser } = req;
             this.validDateRequest(email);
             let user = await UserRepository.findByEmail(email);
             this.validUserNotFound(user);
+            this.validateAuthenticateUser(user, authUser);
             return {
                 status: httpStatus.SUCCESS,
-                id: user.id,
-                name: user.name,
-                email: user.email,
-            }
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                }
+            };
         } catch (error) {
+            const status = error.status ? error.status : httpStatus.INTERNAL_SERVER_ERROR
             return {
-                status: error.status ? error.status : httpStatus.INTERNAL_SERVER_ERROR,
+                status: status,
                 message: error.message
             };
         }
@@ -36,35 +41,44 @@ class UserService {
     }
     validUserNotFound(user) {
         if (!user) {
-            throw new Error(httpStatus.BAD_REQUEST, "user was not found.")
+            throw new UserException(httpStatus.BAD_REQUEST, "user was not found.")
+        }
+    }
+    validateAuthenticateUser(user, authUser) {
+        if (!authUser || (user.id !== authUser.id)) {
+            throw new UserException(
+                httpStatus.FORBIDDEN,
+                "You not see this user data."
+            );
         }
     }
     async getAccessToken(req) {
-        
+
         try {
             const { email, password } = req.body;
             this.validAcessTokenData(email, password);
             let user = await UserRepository.findByEmail(email);
             this.validUserNotFound(user);
             await this.validatePassword(password, user.password);
-            const authUser = {id: user.id, name: user.name, email:user.email };
-            const accessToken  = jwt.sign({authUser}, secrets.API_SECRET,{
+            const authUser = { id: user.id, name: user.name, email: user.email };
+            const accessToken = jwt.sign({ authUser }, secrets.API_SECRET, {
                 expiresIn: "1d",
-            } );
+            });
             return {
                 status: httpStatus.SUCCESS,
                 accessToken,
             };
         } catch (error) {
+            const status = error && error.status ? error.status : httpStatus.INTERNAL_SERVER_ERROR;
             return {
-                status: error.status ? error.status : httpStatus.INTERNAL_SERVER_ERROR,
+                status,
                 message: error.message
             };
         }
     }
 
     validAcessTokenData(email, password) {
-        if (!email || ! password) {
+        if (!email || !password) {
             throw new UserException(
                 httpStatus.UNAUTHORIZED,
                 "Email and password must be informed."
@@ -72,7 +86,7 @@ class UserService {
         }
     }
 
-    async validatePassword(password, hashPassword ) {
+    async validatePassword(password, hashPassword) {
         if (!bcrypt.compare(password, hashPassword)) {
             throw new UserException(httpStatus.UNAUTHORIZED, "Password doesn´t match.");
         }

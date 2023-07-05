@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "startDev": "nodemon app.js"
+    "startDev": "nodemon --inspect app.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

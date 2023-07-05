@@ -4,3 +4,19 @@ server:
 spring:
   application:
     name: product-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/product_db
+    username: ${PRODUCT_DB_USER:product_user}
+    password: ${PRODUCT_DB_PASSWORD:product_password}
+    jpa:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
+          jdbc:
+            time_zone: UTC
+          default_batch_fetch_size: 20

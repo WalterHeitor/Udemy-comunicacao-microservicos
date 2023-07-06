@@ -1,6 +1,5 @@
-package br.com.curso.udemy.productapi.adapters.in.controller.product;
+package br.com.curso.udemy.productapi.adapters.in.controller.product.response;
 
-import br.com.curso.udemy.productapi.adapters.in.controller.product.response.SupplierResponse;
 import br.com.curso.udemy.productapi.aplication.core.domain.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

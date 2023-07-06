@@ -1,7 +1,8 @@
-package br.com.curso.udemy.productapi.adapters.in.controller.product;
+package br.com.curso.udemy.productapi.adapters.in.controller;
 
 
-import br.com.curso.udemy.productapi.aplication.ports.in.GetAllProductsUseCasePort;
+import br.com.curso.udemy.productapi.adapters.in.controller.dto.response.ProductResponse;
+import br.com.curso.udemy.productapi.aplication.ports.in.product.GetAllProductsUseCasePort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

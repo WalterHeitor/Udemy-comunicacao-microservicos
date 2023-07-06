@@ -2,7 +2,7 @@ package br.com.curso.udemy.productapi.adapters.out.persistence;
 
 import br.com.curso.udemy.productapi.adapters.out.persistence.entity.ProductEntity;
 import br.com.curso.udemy.productapi.adapters.out.persistence.repository.ProductRepository;
-import br.com.curso.udemy.productapi.aplication.core.domain.Product;
+import br.com.curso.udemy.productapi.aplication.core.domain.model.Product;
 import br.com.curso.udemy.productapi.aplication.ports.out.GetAllProductsAdapterPort;
 import org.springframework.stereotype.Component;
 

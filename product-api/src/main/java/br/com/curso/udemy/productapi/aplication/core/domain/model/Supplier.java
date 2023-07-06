@@ -1,4 +1,4 @@
-package br.com.curso.udemy.productapi.aplication.core.domain;
+package br.com.curso.udemy.productapi.aplication.core.domain.model;
 
 import java.util.Objects;
 

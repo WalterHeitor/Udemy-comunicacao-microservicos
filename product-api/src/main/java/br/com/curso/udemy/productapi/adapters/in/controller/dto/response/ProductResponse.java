@@ -1,7 +1,7 @@
-package br.com.curso.udemy.productapi.adapters.in.controller.product;
+package br.com.curso.udemy.productapi.adapters.in.controller.dto.response;
 
-import br.com.curso.udemy.productapi.adapters.in.controller.product.response.SupplierResponse;
-import br.com.curso.udemy.productapi.aplication.core.domain.Product;
+import br.com.curso.udemy.productapi.aplication.core.domain.model.Product;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,8 +15,10 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductResponse {
+    @JsonProperty("product_id")
     private Long productId;
     private String name;
+    @JsonProperty("quantity_available")
     private Integer quantityAvailable;
     private SupplierResponse supplier;
     private CategoryResponse category;

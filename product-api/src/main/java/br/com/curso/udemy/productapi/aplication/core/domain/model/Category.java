@@ -1,4 +1,6 @@
-package br.com.curso.udemy.productapi.aplication.core.domain;
+package br.com.curso.udemy.productapi.aplication.core.domain.model;
+
+import br.com.curso.udemy.productapi.adapters.out.persistence.entity.CategoryEntity;
 
 import java.util.Objects;
 
@@ -12,6 +14,13 @@ public class Category {
     public Category(Long categoryId, String description) {
         this.categoryId = categoryId;
         this.description = description;
+    }
+
+    public static Category fromEntity(CategoryEntity categoryEntity) {
+
+        return new Category(
+                categoryEntity.getCategoryId(),
+                categoryEntity.getDescription());
     }
 
     public Long getCategoryId() {

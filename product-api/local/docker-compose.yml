@@ -6,7 +6,11 @@ services:
     restart: always
     environment:
       POSTGRES_DB: ${PRODUCT_DB_NAME:-product_db}
-      POSTGRES_USER: ${PRODUCT_DB_USER:-product_user}
+      POSTGRES_USER: ${PRODUCT_DB_USER:-postgres}
       POSTGRES_PASSWORD: ${PRODUCT_DB_PASSWORD:-product_password}
     ports:
-      - "5433:5432"
+      - 5433:5432
+    volumes:
+      - product-data:/var/lib/postgresql/data
+volumes:
+  product-data:

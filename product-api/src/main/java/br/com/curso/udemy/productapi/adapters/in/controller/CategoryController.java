@@ -57,4 +57,9 @@ public class CategoryController {
                 ));
     }
 
+    @DeleteMapping
+        public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+
+            return ResponseEntity.noContent().build();
+    }
 }

@@ -3,7 +3,6 @@ package br.com.curso.udemy.productapi.adapters.in.controller;
 import br.com.curso.udemy.productapi.adapters.in.controller.dto.request.CreateCategoryRequest;
 import br.com.curso.udemy.productapi.adapters.in.controller.dto.request.UpdateCategoryRequest;
 import br.com.curso.udemy.productapi.adapters.in.controller.dto.response.CategoryResponse;
-import br.com.curso.udemy.productapi.aplication.core.domain.model.Category;
 import br.com.curso.udemy.productapi.aplication.ports.in.category.CrudCategoryUseCasePort;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,7 @@ public class CategoryController {
     public ResponseEntity<CategoryResponse> createCategory(
             @RequestBody @Valid CreateCategoryRequest createCategoryRequest,
             UriComponentsBuilder uriBuilder
-            ) {
+    ) {
 
         CategoryResponse categoryResponse = CategoryResponse
                 .fromToDomain(crudCategoryUseCasePort.executeCreate(createCategoryRequest.toDomain()));
@@ -40,7 +39,7 @@ public class CategoryController {
 
     @Transactional
     @GetMapping("{id}")
-    public ResponseEntity<CategoryResponse> getById(@PathVariable Long id){
+    public ResponseEntity<CategoryResponse> getById(@PathVariable Long id) {
 
         return ResponseEntity.ok(CategoryResponse
                 .fromToDomain(crudCategoryUseCasePort.executeFindById(id)));
@@ -57,4 +56,10 @@ public class CategoryController {
                 ));
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+
+        crudCategoryUseCasePort.executeDelete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

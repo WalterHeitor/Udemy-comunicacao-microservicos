@@ -6,5 +6,5 @@ public interface CrudCategoryUseCasePort {
     Category executeCreate (Category category);
     Category executeUpdate (Category category);
     Category executeFindById (Long categoryId);
-    Void executeDelete (Long categoryId);
+    void executeDelete (Long categoryId);
 }

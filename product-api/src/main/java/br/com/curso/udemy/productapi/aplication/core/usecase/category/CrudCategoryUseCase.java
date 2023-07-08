@@ -31,8 +31,8 @@ public class CrudCategoryUseCase implements CrudCategoryUseCasePort {
     }
 
     @Override
-    public Void executeDelete(Long categoryId) {
+    public void executeDelete(Long categoryId) {
 
-        return crudCategoryAdapterPort.delete(categoryId);
+        this.crudCategoryAdapterPort.delete(categoryId);
     }
 }

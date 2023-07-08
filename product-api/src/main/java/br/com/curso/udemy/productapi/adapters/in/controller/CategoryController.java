@@ -56,7 +56,8 @@ public class CategoryController {
                 ));
     }
 
-    @DeleteMapping
+    @Transactional
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
 
         crudCategoryUseCasePort.executeDelete(id);

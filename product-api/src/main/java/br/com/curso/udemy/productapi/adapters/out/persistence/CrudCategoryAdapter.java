@@ -36,10 +36,13 @@ public class CrudCategoryAdapter implements CrudCategoryAdapterPort {
 
     @Override
     public Category findById(Long categoryId) {
-        Optional<CategoryEntity> optionalCategoryEntity = findByIdCategoryEntity(categoryId);
-        // lançar exception NoSuchElementException
-        throwNoSuchElementExceptionIfCategoryNotExists(categoryId, optionalCategoryEntity);
-        return Category.fromEntity(optionalCategoryEntity.get());
+        try {
+            Optional<CategoryEntity> optionalCategoryEntity = findByIdCategoryEntity(categoryId);
+            throwNoSuchElementExceptionIfCategoryNotExists(categoryId, optionalCategoryEntity);
+            return Category.fromEntity(optionalCategoryEntity.get());
+        } catch (Exception e) {
+            throw new RuntimeException("Create exception: " + e.getMessage(), e);
+        }
     }
 
     @Override

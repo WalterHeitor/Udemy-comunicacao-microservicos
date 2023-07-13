@@ -23,6 +23,16 @@ public class Product {
         this.category = category;
     }
 
+    public Product(Long productId, String name, Integer quantityAvailable,
+                   Supplier supplier, Category category, LocalDateTime createAt) {
+        this.productId = productId;
+        this.name = name;
+        this.quantityAvailable = quantityAvailable;
+        this.supplier = supplier;
+        this.category = category;
+        this.createAt = createAt;
+    }
+
     public static Product fromEntity(ProductEntity productEntity) {
         return new Product(
                 productEntity.getProductId(),
@@ -33,7 +43,8 @@ public class Product {
                         productEntity.getSupplier().getName()),
                 new Category(
                         productEntity.getCategory().getCategoryId(),
-                        productEntity.getCategory().getDescription())
+                        productEntity.getCategory().getDescription()),
+                productEntity.getCreateAt()
         );
     }
 
@@ -110,7 +121,8 @@ public class Product {
                 new Category(
                         productEntity.getCategory().getCategoryId(),
                         productEntity.getCategory().getDescription()
-                )
+                ),
+                productEntity.getCreateAt()
         )).collect(Collectors.toList());
     }
 }

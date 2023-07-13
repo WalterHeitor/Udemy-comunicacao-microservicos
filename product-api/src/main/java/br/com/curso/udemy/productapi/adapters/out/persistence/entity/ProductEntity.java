@@ -30,14 +30,6 @@ public class ProductEntity {
     @Column(name = "create_at", nullable = false, updatable = false)
     private LocalDateTime createAt;
 
-    public ProductEntity(
-            Long productId, String name, Integer quantityAvailable, SupplierEntity supplier, CategoryEntity category) {
-        this.productId = productId;
-        this.name = name;
-        this.quantityAvailable = quantityAvailable;
-        this.supplier = supplier;
-        this.category = category;
-    }
 
     @PrePersist
     public void prePersist() {
@@ -57,8 +49,10 @@ public class ProductEntity {
                 CategoryEntity.builder()
                         .categoryId(product.getCategory().getCategoryId())
                         .description(product.getCategory().getDescription())
-                        .build()
+                        .build(),
+                product.getCreateAt()
         );
+
     }
 
     public Product toDomain() {

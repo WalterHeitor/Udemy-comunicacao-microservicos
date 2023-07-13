@@ -1,6 +1,7 @@
 package br.com.curso.udemy.productapi.adapters.in.controller.dto.response;
 
 import br.com.curso.udemy.productapi.aplication.core.domain.model.Product;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class ProductResponse {
     private SupplierResponse supplier;
     private CategoryResponse category;
     @JsonProperty("create_at")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createAt;
 
     public static List<ProductResponse> fromDomain(List<Product> products) {
@@ -57,6 +59,7 @@ public class ProductResponse {
                         .supplierId(executeCreate.getSupplier().getSupplierId())
                         .name(executeCreate.getSupplier().getName())
                         .build())
+                .createAt(executeCreate.getCreateAt())
                 .build();
     }
 }

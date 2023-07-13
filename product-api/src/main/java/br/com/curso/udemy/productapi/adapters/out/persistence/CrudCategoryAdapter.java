@@ -38,7 +38,6 @@ public class CrudCategoryAdapter implements CrudCategoryAdapterPort {
     public Category findById(Long categoryId) {
         try {
             Optional<CategoryEntity> optionalCategoryEntity = findByIdCategoryEntity(categoryId);
-            throwNoSuchElementExceptionIfCategoryNotExists(categoryId, optionalCategoryEntity);
             return Category.fromEntity(optionalCategoryEntity.get());
         } catch (Exception e) {
             throw new RuntimeException("Create exception: " + e.getMessage(), e);
@@ -48,15 +47,7 @@ public class CrudCategoryAdapter implements CrudCategoryAdapterPort {
     @Override
     public void delete(Long categoryId) {
         Optional<CategoryEntity> optionalCategoryEntity = findByIdCategoryEntity(categoryId);
-        throwNoSuchElementExceptionIfCategoryNotExists(categoryId, optionalCategoryEntity);
         this.categoryRepository.delete(optionalCategoryEntity.get());
-    }
-
-    private static void throwNoSuchElementExceptionIfCategoryNotExists(Long categoryId, Optional<CategoryEntity> optionalCategoryEntity) {
-        if (optionalCategoryEntity.isEmpty()) {
-            throw new NoSuchElementException(
-                    String.format("Category no longer exists for category id = %d", categoryId));
-        }
     }
 
     private Optional<CategoryEntity> findByIdCategoryEntity(Long categoryId) {

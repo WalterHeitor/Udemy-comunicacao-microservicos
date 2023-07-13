@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,8 @@ public class ProductResponse {
     private Integer quantityAvailable;
     private SupplierResponse supplier;
     private CategoryResponse category;
+    @JsonProperty("create_at")
+    private LocalDateTime createAt;
 
     public static List<ProductResponse> fromDomain(List<Product> products) {
         return products.stream().map(product -> ProductResponse.builder()
@@ -36,6 +39,24 @@ public class ProductResponse {
                         .supplierId(product.getSupplier().getSupplierId())
                         .name(product.getSupplier().getName())
                         .build())
+                .createAt(product.getCreateAt())
                 .build()).collect(Collectors.toList());
+    }
+
+    public static ProductResponse fromToDomain(Product executeCreate) {
+        return ProductResponse
+                .builder()
+                .productId(executeCreate.getProductId())
+                .name(executeCreate.getName())
+                .quantityAvailable(executeCreate.getQuantityAvailable())
+                .category(CategoryResponse.builder()
+                        .categoryId(executeCreate.getCategory().getCategoryId())
+                        .description(executeCreate.getCategory().getDescription())
+                        .build())
+                .supplier(SupplierResponse.builder()
+                        .supplierId(executeCreate.getSupplier().getSupplierId())
+                        .name(executeCreate.getSupplier().getName())
+                        .build())
+                .build();
     }
 }

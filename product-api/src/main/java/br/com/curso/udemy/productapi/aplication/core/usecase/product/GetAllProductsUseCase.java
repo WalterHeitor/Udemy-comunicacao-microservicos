@@ -1,8 +1,8 @@
-package br.com.curso.udemy.productapi.aplication.core.usecase;
+package br.com.curso.udemy.productapi.aplication.core.usecase.product;
 
 import br.com.curso.udemy.productapi.aplication.core.domain.model.Product;
 import br.com.curso.udemy.productapi.aplication.ports.in.product.GetAllProductsUseCasePort;
-import br.com.curso.udemy.productapi.aplication.ports.out.GetAllProductsAdapterPort;
+import br.com.curso.udemy.productapi.aplication.ports.out.product.GetAllProductsAdapterPort;
 
 import java.util.List;
 

@@ -2,6 +2,7 @@ package br.com.curso.udemy.productapi.aplication.core.domain.model;
 
 import br.com.curso.udemy.productapi.adapters.out.persistence.entity.ProductEntity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ public class Product {
     private Integer quantityAvailable;
     private Supplier supplier;
     private Category category;
+    private LocalDateTime createAt;
 
     public Product(Long productId, String name, Integer quantityAvailable, Supplier supplier, Category category) {
         this.productId = productId;
@@ -19,6 +21,20 @@ public class Product {
         this.quantityAvailable = quantityAvailable;
         this.supplier = supplier;
         this.category = category;
+    }
+
+    public static Product fromEntity(ProductEntity productEntity) {
+        return new Product(
+                productEntity.getProductId(),
+                productEntity.getName(),
+                productEntity.getQuantityAvailable(),
+                new Supplier(
+                        productEntity.getSupplier().getSupplierId(),
+                        productEntity.getSupplier().getName()),
+                new Category(
+                        productEntity.getCategory().getCategoryId(),
+                        productEntity.getCategory().getDescription())
+        );
     }
 
     public Long getProductId() {
@@ -61,6 +77,14 @@ public class Product {
         this.category = category;
     }
 
+    public LocalDateTime getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(LocalDateTime createAt) {
+        this.createAt = createAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,7 +98,7 @@ public class Product {
         return Objects.hash(productId);
     }
 
-    public static List<Product> fromEntity(List<ProductEntity> productEntities) {
+    public static List<Product> fromEntityList(List<ProductEntity> productEntities) {
         return productEntities.stream().map(productEntity -> new Product(
                 productEntity.getProductId(),
                 productEntity.getName(),

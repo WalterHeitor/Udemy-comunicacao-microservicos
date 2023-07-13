@@ -3,7 +3,7 @@ package br.com.curso.udemy.productapi.adapters.out.persistence;
 import br.com.curso.udemy.productapi.adapters.out.persistence.entity.ProductEntity;
 import br.com.curso.udemy.productapi.adapters.out.persistence.repository.ProductRepository;
 import br.com.curso.udemy.productapi.aplication.core.domain.model.Product;
-import br.com.curso.udemy.productapi.aplication.ports.out.GetAllProductsAdapterPort;
+import br.com.curso.udemy.productapi.aplication.ports.out.product.GetAllProductsAdapterPort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,6 +19,6 @@ public class GetAllProductsAdapter  implements GetAllProductsAdapterPort {
     @Override
     public List<Product> getAllProducts() {
         List<ProductEntity> productEntities = productRepository.findAll();
-        return Product.fromEntity(productEntities);
+        return Product.fromEntityList(productEntities);
     }
 }

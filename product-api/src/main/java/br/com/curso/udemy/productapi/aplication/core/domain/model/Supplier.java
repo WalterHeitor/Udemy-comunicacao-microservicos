@@ -1,5 +1,7 @@
 package br.com.curso.udemy.productapi.aplication.core.domain.model;
 
+import br.com.curso.udemy.productapi.adapters.out.persistence.entity.SupplierEntity;
+
 import java.util.Objects;
 
 public class Supplier {
@@ -13,6 +15,10 @@ public class Supplier {
     public Supplier(Long supplierId, String name) {
         this.supplierId = supplierId;
         this.name = name;
+    }
+
+    public static Supplier fromEntity(SupplierEntity supplierEntity) {
+        return new Supplier(supplierEntity.getSupplierId(), supplierEntity.getName());
     }
 
     public Long getSupplierId() {
@@ -51,4 +57,5 @@ public class Supplier {
                 ", name='" + name + '\'' +
                 '}';
     }
+
 }

@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   product-db:
     image: postgres:latest
     restart: always
@@ -9,8 +10,15 @@ services:
       POSTGRES_USER: ${PRODUCT_DB_USER:-postgres}
       POSTGRES_PASSWORD: ${PRODUCT_DB_PASSWORD:-product_password}
     ports:
-      - 5433:5432
-    volumes:
-      - product-data:/var/lib/postgresql/data
-volumes:
-  product-data:
+      - "5433:5432"
+
+  auth-db:
+    image: postgres:latest
+    container_name: auth-db
+    restart: always
+    environment:
+      POSTGRES_DB: ${AUTH_DB_NAME:-auth_db}
+      POSTGRES_USER: ${AUTH_DB_USER:-auth_user}
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD:-auth_password}
+    ports:
+      - "5432:5432"

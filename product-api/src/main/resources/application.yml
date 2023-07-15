@@ -24,3 +24,7 @@ spring:
     sql:
         init:
             mode: always
+
+app-config:
+    secrets:
+        api-secret: ${API_SECRET:YXV0aC1hcGktc2VjcmV0LWRldi0xMjM0NTY=}

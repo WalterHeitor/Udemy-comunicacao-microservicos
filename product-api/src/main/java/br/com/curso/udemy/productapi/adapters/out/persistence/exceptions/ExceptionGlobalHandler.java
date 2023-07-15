@@ -1,5 +1,6 @@
 package br.com.curso.udemy.productapi.adapters.out.persistence.exceptions;
 
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,5 +19,15 @@ public class ExceptionGlobalHandler {
         details.setMessage(exception.getMessage());
 
         return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<?> handleAuthenticationException(AuthenticationException authenticationException) {
+
+        var details = new ExceptionDetails();
+        details.setStatus(HttpStatus.UNAUTHORIZED.value());
+        details.setMessage(authenticationException.getMessage());
+
+        return new ResponseEntity<>(details, HttpStatus.UNAUTHORIZED);
     }
 }

@@ -22,3 +22,10 @@ services:
       POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD:-auth_password}
     ports:
       - "5432:5432"
+  sales-rabbit:
+    image: rabbitmq:3-management
+    container_name: sales-rabbit
+    ports:
+      - "5672:5672"
+      - "25676:25676"
+      - "15672:15672"

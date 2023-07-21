@@ -15,5 +15,6 @@ public class UpdateProductStockUseCase implements UpdateProductStockUseCasePort 
     @Override
     public void updateProductStock(Product product) {
 
+        updateProductStockAdapterPort.updateProductStock(product);
     }
 }

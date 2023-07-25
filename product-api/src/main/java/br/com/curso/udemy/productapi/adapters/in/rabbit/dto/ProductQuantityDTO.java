@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductQuantityDTO {
 
-    private Integer productId;
+    private Long productId;
     private Integer quantity;
 }

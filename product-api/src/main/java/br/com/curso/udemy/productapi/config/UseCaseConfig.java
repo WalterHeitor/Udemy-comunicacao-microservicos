@@ -3,10 +3,12 @@ package br.com.curso.udemy.productapi.config;
 import br.com.curso.udemy.productapi.aplication.core.usecase.product.CrudProductUseCase;
 import br.com.curso.udemy.productapi.aplication.core.usecase.product.GetAllProductsUseCase;
 import br.com.curso.udemy.productapi.aplication.core.usecase.category.CrudCategoryUseCase;
+import br.com.curso.udemy.productapi.aplication.core.usecase.product.UpdateProductStockUseCase;
 import br.com.curso.udemy.productapi.aplication.core.usecase.supplier.CrudSupplierUseCase;
 import br.com.curso.udemy.productapi.aplication.ports.in.category.CrudCategoryUseCasePort;
 import br.com.curso.udemy.productapi.aplication.ports.in.product.CrudProductUseCasePort;
 import br.com.curso.udemy.productapi.aplication.ports.in.product.GetAllProductsUseCasePort;
+import br.com.curso.udemy.productapi.aplication.ports.in.product.UpdateProductStockUseCasePort;
 import br.com.curso.udemy.productapi.aplication.ports.in.supplier.CrudSupplierUseCasePort;
 import br.com.curso.udemy.productapi.aplication.ports.out.product.CrudProductAdapterPort;
 import br.com.curso.udemy.productapi.aplication.ports.out.product.GetAllProductsAdapterPort;
@@ -35,5 +37,10 @@ public class UseCaseConfig {
     @Bean
     public CrudProductUseCasePort crudProductUseCasePort(CrudProductAdapterPort crudProductAdapterPort ) {
         return new CrudProductUseCase(crudProductAdapterPort);
+    }
+
+    @Bean
+    UpdateProductStockUseCasePort updateProductStockUseCasePort(CrudProductAdapterPort crudProductAdapterPort) {
+        return new UpdateProductStockUseCase(crudProductAdapterPort);
     }
 }

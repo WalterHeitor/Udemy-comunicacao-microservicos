@@ -1,8 +1,8 @@
 package br.com.curso.udemy.productapi.aplication.ports.in.product;
 
-import br.com.curso.udemy.productapi.aplication.core.domain.model.Product;
+import br.com.curso.udemy.productapi.adapters.in.rabbit.dto.ProductStockDTO;
 
 public interface UpdateProductStockUseCasePort {
 
-    void updateProductStock(Product product);
+    void updateProductStock(ProductStockDTO product);
 }

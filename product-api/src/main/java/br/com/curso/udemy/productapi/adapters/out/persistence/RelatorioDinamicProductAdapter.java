@@ -21,7 +21,7 @@ public class RelatorioDinamicProductAdapter  {
 
     public List<Product> getLikeName(String name) {
         List<ProductEntity> productEntities =
-                productRepository.findAll(Specification.where(SpecificationProduct.name(name)));
+                productRepository.findAll(Specification.where(SpecificationProduct.likeName(name)));
         return Product.fromEntityList(productEntities);
     }
 }

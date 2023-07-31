@@ -125,4 +125,8 @@ public class Product {
                 productEntity.getCreateAt()
         )).collect(Collectors.toList());
     }
+
+    public void updateStock(Integer quantity) {
+        quantityAvailable = quantityAvailable - quantity;
+    }
 }

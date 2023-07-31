@@ -9,9 +9,12 @@ import br.com.curso.udemy.productapi.aplication.ports.out.category.CrudCategoryA
 import br.com.curso.udemy.productapi.aplication.ports.out.product.CrudProductAdapterPort;
 import br.com.curso.udemy.productapi.aplication.ports.out.supplier.CrudSupplierAdapterPort;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class CrudProductAdapter implements CrudProductAdapterPort {
@@ -26,6 +29,7 @@ public class CrudProductAdapter implements CrudProductAdapterPort {
         this.crudSupplierAdapterPort = crudSupplierAdapterPort;
     }
 
+    @Transactional
     @Override
     public Product create(Product product) {
 
@@ -50,6 +54,7 @@ public class CrudProductAdapter implements CrudProductAdapterPort {
         product.setCategory(category);
     }
 
+    @Transactional
     @Override
     public Product update(Product product) {
 
@@ -58,6 +63,7 @@ public class CrudProductAdapter implements CrudProductAdapterPort {
                 .toDomain();
     }
 
+    @Transactional
     @Override
     public Product findById(Long productId) {
         try {
@@ -69,11 +75,21 @@ public class CrudProductAdapter implements CrudProductAdapterPort {
         }
     }
 
+    @Transactional
     @Override
     public void delete(Long productId) {
         Optional<ProductEntity> optionalProductEntity = findByIdProductEntity(productId);
         throwNoSuchElementExceptionIfProductNotExists(productId, optionalProductEntity);
         this.productRepository.delete(optionalProductEntity.get());
+    }
+
+    @Override
+    public List<Product> updateAll(List<Product> products) {
+        List<ProductEntity> list = this.productRepository.saveAll(products.stream().map(ProductEntity::fromProduct
+        ).toList());
+        return list.stream()
+                .map(ProductEntity::toDomain)
+                .toList();
     }
 
     private static void throwNoSuchElementExceptionIfProductNotExists(Long productId, Optional<ProductEntity> optionalProductEntity) {

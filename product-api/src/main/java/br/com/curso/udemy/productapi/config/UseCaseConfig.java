@@ -14,6 +14,7 @@ import br.com.curso.udemy.productapi.aplication.ports.in.supplier.CrudSupplierUs
 import br.com.curso.udemy.productapi.aplication.ports.out.category.CrudCategoryAdapterPort;
 import br.com.curso.udemy.productapi.aplication.ports.out.product.CrudProductAdapterPort;
 import br.com.curso.udemy.productapi.aplication.ports.out.product.GetAllProductsAdapterPort;
+import br.com.curso.udemy.productapi.aplication.ports.out.product.UpdateProductAdapterPort;
 import br.com.curso.udemy.productapi.aplication.ports.out.supplier.CrudSupplierAdapterPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +44,8 @@ public class UseCaseConfig {
     @Bean
     UpdateProductStockUseCasePort updateProductStockUseCasePort(
             CrudProductAdapterPort crudProductAdapterPort,
+            UpdateProductAdapterPort updateProductAdapterPort,
             Logger logger) {
-        return new UpdateProductStockUseCase(crudProductAdapterPort, logger);
+        return new UpdateProductStockUseCase(crudProductAdapterPort, updateProductAdapterPort, logger);
     }
 }

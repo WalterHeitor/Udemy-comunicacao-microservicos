@@ -4,8 +4,10 @@ package br.com.curso.udemy.productapi.adapters.in.controller;
 import br.com.curso.udemy.productapi.adapters.in.controller.dto.request.CreateProductRequest;
 import br.com.curso.udemy.productapi.adapters.in.controller.dto.request.UpdateProductRequest;
 import br.com.curso.udemy.productapi.adapters.in.controller.dto.response.ProductResponse;
+import br.com.curso.udemy.productapi.adapters.in.controller.dto.response.ProductSalesResponse;
 import br.com.curso.udemy.productapi.aplication.ports.in.product.CrudProductUseCasePort;
 import br.com.curso.udemy.productapi.aplication.ports.in.product.GetAllProductsUseCasePort;
+import br.com.curso.udemy.productapi.aplication.ports.in.product.GetProductsSalesUseCasePort;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +23,12 @@ public class ProductController {
 
     private final GetAllProductsUseCasePort getAllProductsUseCasePort;
     private final CrudProductUseCasePort crudProductUseCasePort;
+    private final GetProductsSalesUseCasePort getProductsSalesUseCasePort;
 
-    public ProductController(GetAllProductsUseCasePort getAllProductsUseCasePort, CrudProductUseCasePort crudProductUseCasePort) {
+    public ProductController(GetAllProductsUseCasePort getAllProductsUseCasePort, CrudProductUseCasePort crudProductUseCasePort, GetProductsSalesUseCasePort getProductsSalesUseCasePort) {
         this.getAllProductsUseCasePort = getAllProductsUseCasePort;
         this.crudProductUseCasePort = crudProductUseCasePort;
+        this.getProductsSalesUseCasePort = getProductsSalesUseCasePort;
     }
 
     @GetMapping
@@ -74,4 +78,9 @@ public class ProductController {
         crudProductUseCasePort.executeDelete(id);
         return ResponseEntity.noContent().build();
     }
+     @GetMapping("{productId}/sales")
+    public ResponseEntity<ProductSalesResponse> getSales(@PathVariable Long productId) {
+
+        return ResponseEntity.ok(getProductsSalesUseCasePort.executeFinById(productId));
+     }
 }

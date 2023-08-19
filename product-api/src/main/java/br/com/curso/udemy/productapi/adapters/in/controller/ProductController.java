@@ -2,9 +2,12 @@ package br.com.curso.udemy.productapi.adapters.in.controller;
 
 
 import br.com.curso.udemy.productapi.adapters.in.controller.dto.request.CreateProductRequest;
+import br.com.curso.udemy.productapi.adapters.in.controller.dto.request.ProductStockRequest;
 import br.com.curso.udemy.productapi.adapters.in.controller.dto.request.UpdateProductRequest;
 import br.com.curso.udemy.productapi.adapters.in.controller.dto.response.ProductResponse;
 import br.com.curso.udemy.productapi.adapters.in.controller.dto.response.ProductSalesResponse;
+import br.com.curso.udemy.productapi.adapters.in.controller.dto.response.SuccessResponse;
+import br.com.curso.udemy.productapi.aplication.ports.in.product.CheckProductsStockUseCasePort;
 import br.com.curso.udemy.productapi.aplication.ports.in.product.CrudProductUseCasePort;
 import br.com.curso.udemy.productapi.aplication.ports.in.product.GetAllProductsUseCasePort;
 import br.com.curso.udemy.productapi.aplication.ports.in.product.GetProductsSalesUseCasePort;
@@ -24,11 +27,13 @@ public class ProductController {
     private final GetAllProductsUseCasePort getAllProductsUseCasePort;
     private final CrudProductUseCasePort crudProductUseCasePort;
     private final GetProductsSalesUseCasePort getProductsSalesUseCasePort;
+    private final CheckProductsStockUseCasePort checkProductsStockUseCasePort;
 
-    public ProductController(GetAllProductsUseCasePort getAllProductsUseCasePort, CrudProductUseCasePort crudProductUseCasePort, GetProductsSalesUseCasePort getProductsSalesUseCasePort) {
+    public ProductController(GetAllProductsUseCasePort getAllProductsUseCasePort, CrudProductUseCasePort crudProductUseCasePort, GetProductsSalesUseCasePort getProductsSalesUseCasePort, CheckProductsStockUseCasePort checkProductsStockUseCasePort) {
         this.getAllProductsUseCasePort = getAllProductsUseCasePort;
         this.crudProductUseCasePort = crudProductUseCasePort;
         this.getProductsSalesUseCasePort = getProductsSalesUseCasePort;
+        this.checkProductsStockUseCasePort = checkProductsStockUseCasePort;
     }
 
     @GetMapping
@@ -78,6 +83,14 @@ public class ProductController {
         crudProductUseCasePort.executeDelete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("check-stock")
+    public ResponseEntity<SuccessResponse> checkStock(@RequestBody ProductStockRequest productStockRequest) {
+
+        return ResponseEntity.ok(checkProductsStockUseCasePort.
+                checkProductsStock(productStockRequest));
+    }
+
      @GetMapping("{productId}/sales")
     public ResponseEntity<ProductSalesResponse> getSales(@PathVariable Long productId) {
 

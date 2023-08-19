@@ -14,13 +14,11 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 public class GetProductsSalesUseCase implements GetProductsSalesUseCasePort {
 
     private final CrudProductAdapterPort crudProductAdapterPort;
-    private final UpdateProductAdapterPort updateProductAdapterPort;
     private final SalesClient salesClient;
     private final Logger logger;
 
     public GetProductsSalesUseCase(CrudProductAdapterPort crudProductAdapterPort, UpdateProductAdapterPort updateProductAdapterPort, SalesClient salesClient, Logger logger) {
         this.crudProductAdapterPort = crudProductAdapterPort;
-        this.updateProductAdapterPort = updateProductAdapterPort;
         this.salesClient = salesClient;
         this.logger = logger;
     }
